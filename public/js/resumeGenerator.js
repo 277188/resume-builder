@@ -1,11 +1,11 @@
-// JavaScript核心模块
+
 const ResumeGenerator = {
     currentTemplate: '1',
     resumeData: {},
     zoomLevel: 1,
     
     init: function() {
-        // 从本地存储加载数据或使用默认数据
+        
         this.loadFromLocalStorage();
         
         this.initTemplateSwitcher();
@@ -18,17 +18,17 @@ const ResumeGenerator = {
         this.initZoomControls();
         this.initPrintFunctionality();
         this.initSectionClicks();
-        this.initDragAndDrop(); // 新增：初始化拖拽联动
+        this.initDragAndDrop(); 
         
         this.updateResumePreview();
     },
     
-    // 初始化拖拽联动
+    
     initDragAndDrop: function() {
         const sectionsList = document.getElementById('sections-list');
         if (!sectionsList) return;
         
-        // 使用Sortable.js初始化拖拽
+        
         new Sortable(sectionsList, {
             animation: 150,
             handle: '.fa-grip-vertical',
@@ -36,7 +36,7 @@ const ResumeGenerator = {
             chosenClass: 'sortable-chosen',
             dragClass: 'sortable-drag',
             onEnd: (evt) => {
-                // 重新排序数据
+                
                 const newOrder = [];
                 const sectionElements = sectionsList.querySelectorAll('.resume-section');
                 sectionElements.forEach(element => {
@@ -44,7 +44,7 @@ const ResumeGenerator = {
                     newOrder.push(sectionKey);
                 });
                 
-                // 重新组织数据
+                
                 const newData = {};
                 newOrder.forEach(key => {
                     if (this.resumeData[key]) {
@@ -52,18 +52,18 @@ const ResumeGenerator = {
                     }
                 });
                 
-                // 更新数据
+                
                 this.resumeData = newData;
                 this.updateResumePreview();
                 this.saveToLocalStorage();
                 
-                // 更新左侧板块名称显示
+                
                 this.updateSectionTitles();
             }
         });
     },
     
-    // 更新左侧板块名称显示
+    
     updateSectionTitles: function() {
         const sectionElements = document.querySelectorAll('.resume-section');
         sectionElements.forEach(element => {
@@ -89,7 +89,7 @@ const ResumeGenerator = {
         });
     },
     
-    // 从本地存储加载数据
+    
     loadFromLocalStorage: function() {
         const savedData = localStorage.getItem('resumeData');
         if (savedData) {
@@ -107,13 +107,13 @@ const ResumeGenerator = {
         }
     },
     
-    // 保存数据到本地存储
+    
     saveToLocalStorage: function() {
         localStorage.setItem('resumeData', JSON.stringify(this.resumeData));
         localStorage.setItem('currentTemplate', this.currentTemplate);
     },
     
-    // 初始化模板切换
+    
     initTemplateSwitcher: function() {
         const templateOptions = document.querySelectorAll('.template-option');
         templateOptions.forEach(option => {
@@ -124,10 +124,10 @@ const ResumeGenerator = {
                 this.currentTemplate = option.getAttribute('data-template');
                 const preview = document.getElementById('resume-preview');
                 
-                // 移除所有模板类
+                
                 preview.classList.remove('template-1-style', 'template-2-style', 'template-3-style');
                 
-                // 添加选中的模板类
+                
                 preview.classList.add(`template-${this.currentTemplate}-style`);
                 
                 this.updateResumePreview();
@@ -136,7 +136,7 @@ const ResumeGenerator = {
         });
     },
     
-    // 初始化预览/编辑切换
+    
     initPreviewToggle: function() {
         const previewToggle = document.getElementById('preview-toggle');
         const rightPanel = document.querySelector('.right-panel');
@@ -157,7 +157,7 @@ const ResumeGenerator = {
         }
     },
     
-    // 初始化添加板块功能
+    
     initAddSection: function() {
         const addSectionBtn = document.getElementById('add-section');
         if (addSectionBtn) {
@@ -166,32 +166,32 @@ const ResumeGenerator = {
                 if (sectionName) {
                     const sectionKey = sectionName.toLowerCase().replace(/\s+/g, '-');
                     
-                    // 添加到数据
+                    
                     this.resumeData[sectionKey] = {
                         title: sectionName,
                         content: "请在此处填写内容..."
                     };
                     
-                    // 添加到UI
+                    
                     this.addSectionToUI(sectionKey, sectionName);
                     
-                    // 重新初始化拖拽
+                    
                     this.initDragAndDrop();
                     
-                    // 更新编辑器内容
+                    
                     this.initEditorContent();
                     
                     this.updateResumePreview();
                     this.saveToLocalStorage();
                     
-                    // 滚动到新添加的板块
+                    
                     this.showSectionEditor(sectionKey);
                 }
             });
         }
     },
     
-    // 初始化保存简历功能
+    
     initSaveResume: function() {
         const saveBtn = document.getElementById('save-resume');
         if (saveBtn) {
@@ -201,7 +201,7 @@ const ResumeGenerator = {
         }
     },
     
-    // 初始化表单监听
+    
     initFormListeners: function() {
         document.addEventListener('input', (e) => {
             if (e.target.classList.contains('form-control')) {
@@ -210,7 +210,7 @@ const ResumeGenerator = {
         });
     },
     
-    // 处理表单输入 - 修复自定义模块数据更新问题
+    
     handleFormInput: function(input) {
         const section = input.closest('.editor-section');
         if (!section) return;
@@ -228,17 +228,17 @@ const ResumeGenerator = {
         } else if (sectionKey === 'summary') {
             this.resumeData.summary = input.value;
         } else {
-            // 处理自定义模块
+            
             if (typeof this.resumeData[sectionKey] === 'object' && this.resumeData[sectionKey] !== null) {
-                // 更新对象属性
+                
                 this.resumeData[sectionKey][field] = input.value;
                 
-                // 如果更新的是标题，同步更新左侧板块名称
+                
                 if (field === 'title') {
                     this.updateSectionTitle(sectionKey, input.value);
                 }
             } else {
-                // 如果是字符串类型，转换为对象
+                
                 this.resumeData[sectionKey] = {
                     title: this.resumeData[sectionKey]?.title || sectionKey,
                     content: input.value
@@ -250,7 +250,7 @@ const ResumeGenerator = {
         this.saveToLocalStorage();
     },
     
-    // 更新单个板块标题
+    
     updateSectionTitle: function(sectionKey, newTitle) {
         const sectionElement = document.querySelector(`.resume-section[data-section="${sectionKey}"]`);
         if (sectionElement) {
@@ -261,17 +261,17 @@ const ResumeGenerator = {
         }
     },
     
-    // 初始化左侧边栏点击事件
+    
     initSectionClicks: function() {
         const sectionsContainer = document.getElementById('sections-list');
         if (!sectionsContainer) return;
         
-        // 使用事件委托处理点击事件
+        
         sectionsContainer.addEventListener('click', (e) => {
             const sectionElement = e.target.closest('.resume-section');
             if (!sectionElement) return;
             
-            // 如果点击的是删除按钮，不处理
+            
             if (e.target.classList.contains('delete-section') || 
                 e.target.closest('.delete-section')) {
                 return;
@@ -282,35 +282,35 @@ const ResumeGenerator = {
         });
     },
     
-    // 显示指定板块的编辑器
+    
     showSectionEditor: function(sectionKey) {
-        // 移除所有编辑器的active状态
+        
         document.querySelectorAll('.editor-section').forEach(section => {
             section.classList.remove('active');
         });
         
-        // 移除所有左侧板块的active状态
+        
         document.querySelectorAll('.resume-section').forEach(section => {
             section.classList.remove('active');
         });
         
-        // 激活指定板块的编辑器
+        
         const targetEditor = document.querySelector(`.editor-section[data-section="${sectionKey}"]`);
         if (targetEditor) {
             targetEditor.classList.add('active');
             
-            // 激活左侧板块
+            
             const targetSection = document.querySelector(`.resume-section[data-section="${sectionKey}"]`);
             if (targetSection) {
                 targetSection.classList.add('active');
             }
             
-            // 滚动到该编辑器
+            
             targetEditor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     },
     
-    // 初始化板块列表
+    
     initSectionsList: function() {
         const sectionsContainer = document.getElementById('sections-list');
         if (!sectionsContainer) return;
@@ -323,7 +323,7 @@ const ResumeGenerator = {
             if (key === 'personal') title = '个人信息';
             else if (key === 'summary') title = '个人简介';
             else if (key === 'education') title = '教育背景';
-        // 添加以下中文映射
+        
             else if (key === 'experience') title = '项目经历';
             else if (key === 'skills') title = '技能专长';
             else if (key === 'projects') title = '个人项目';
@@ -341,7 +341,7 @@ const ResumeGenerator = {
         });
     },
     
-    // 添加板块到UI
+    
     addSectionToUI: function(key, title) {
         const sectionsContainer = document.getElementById('sections-list');
         if (!sectionsContainer) return;
@@ -362,7 +362,7 @@ const ResumeGenerator = {
         
         sectionsContainer.appendChild(sectionElement);
         
-        // 添加删除事件
+        
         if (!isCore) {
             const deleteBtn = sectionElement.querySelector('.delete-section');
             deleteBtn.addEventListener('click', (e) => {
@@ -372,13 +372,13 @@ const ResumeGenerator = {
         }
     },
     
-    // 检查是否为核心板块（不可删除）
+    
     isCoreSection: function(key) {
         const coreSections = ['personal', 'summary', 'education'];
         return coreSections.includes(key);
     },
     
-    // 删除板块
+    
     deleteSection: function(sectionKey) {
         if (this.isCoreSection(sectionKey)) {
             FeedbackSystem.showToast('核心板块不能删除！', 'error');
@@ -386,10 +386,10 @@ const ResumeGenerator = {
         }
         
         if (confirm(`确定要删除板块【${this.resumeData[sectionKey]?.title || sectionKey}】吗？`)) {
-            // 从数据中删除
+            
             delete this.resumeData[sectionKey];
             
-            // 重新初始化UI
+            
             this.initSectionsList();
             this.initEditorContent();
             this.updateResumePreview();
@@ -399,7 +399,7 @@ const ResumeGenerator = {
         }
     },
     
-    // 初始化编辑器内容
+    
     initEditorContent: function() {
         const editorContent = document.getElementById('editor-content');
         if (!editorContent) return;
@@ -409,7 +409,7 @@ const ResumeGenerator = {
         const personalEditor = this.createPersonalEditor();
         editorContent.appendChild(personalEditor);
         
-        // 保留个人信息、个人简介和教育背景的编辑器
+        
         if (this.resumeData.summary) {
             const summaryEditor = this.createSectionEditor('summary');
             if (summaryEditor) {
@@ -424,7 +424,7 @@ const ResumeGenerator = {
             }
         }
         
-        // 添加其他自定义板块的编辑器
+        
         Object.keys(this.resumeData).forEach(key => {
             if (!['personal', 'summary', 'education'].includes(key)) {
                 const sectionEditor = this.createSectionEditor(key);
@@ -434,11 +434,11 @@ const ResumeGenerator = {
             }
         });
         
-        // 默认激活个人信息编辑器
+        
         this.showSectionEditor('personal');
     },
     
-    // 创建个人信息编辑器
+    
     createPersonalEditor: function() {
         const section = document.createElement('div');
         section.className = 'editor-section';
@@ -490,7 +490,7 @@ const ResumeGenerator = {
         return section;
     },
     
-    // 创建板块编辑器
+    
     createSectionEditor: function(sectionKey) {
         const section = document.createElement('div');
         section.className = 'editor-section';
@@ -534,7 +534,7 @@ const ResumeGenerator = {
             
             section.appendChild(addButton);
         } else if (typeof this.resumeData[sectionKey] === 'object' && this.resumeData[sectionKey] !== null) {
-            // 处理自定义对象模块
+            
             const content = this.resumeData[sectionKey].content || '';
             section.innerHTML += `
                 <div class="form-group">
@@ -547,7 +547,7 @@ const ResumeGenerator = {
                 </div>
             `;
         } else {
-            // 处理字符串类型的自定义板块
+            
             section.innerHTML += `
                 <div class="form-group">
                     <label for="${sectionKey}-content">内容</label>
@@ -559,7 +559,7 @@ const ResumeGenerator = {
         return section;
     },
     
-    // 创建数组项目编辑器
+    
     createArrayItemEditor: function(sectionKey, item, index) {
         let fields = '';
         
@@ -655,7 +655,7 @@ const ResumeGenerator = {
         `;
     },
     
-    // 添加数组项目
+    
     addArrayItem: function(sectionKey) {
         const emptyItem = {};
         
@@ -684,7 +684,7 @@ const ResumeGenerator = {
         this.resumeData[sectionKey].push(emptyItem);
     },
     
-    // 删除数组项目
+    
     deleteArrayItem: function(sectionKey, index) {
         if (this.resumeData[sectionKey] && this.resumeData[sectionKey].length > index) {
             this.resumeData[sectionKey].splice(index, 1);
@@ -695,7 +695,7 @@ const ResumeGenerator = {
         }
     },
     
-    // 初始化缩放控制
+    
     initZoomControls: function() {
         const zoomIn = document.getElementById('zoom-in');
         const zoomOut = document.getElementById('zoom-out');
@@ -718,7 +718,7 @@ const ResumeGenerator = {
         this.updateZoom();
     },
     
-    // 更新缩放
+    
     updateZoom: function() {
         const resumePreview = document.getElementById('resume-preview');
         const zoomLevel = document.querySelector('.zoom-level');
@@ -732,7 +732,7 @@ const ResumeGenerator = {
         }
     },
     
-    // 初始化打印功能
+    
     initPrintFunctionality: function() {
         const printBtn = document.getElementById('print-resume');
         
@@ -743,17 +743,17 @@ const ResumeGenerator = {
         }
     },
     
-    // 导出为PDF
+    
     exportToPDF: function() {
         const element = document.getElementById('resume-preview');
         const saveBtn = document.getElementById('save-resume');
         const originalText = saveBtn.innerHTML;
         
-        // 显示加载状态
+        
         saveBtn.innerHTML = '<div class="loading"></div> 生成中...';
         saveBtn.disabled = true;
         
-        // 设置PDF选项
+        
         const opt = {
             margin: 10,
             filename: `${this.resumeData.personal.name}_简历.pdf`,
@@ -762,14 +762,14 @@ const ResumeGenerator = {
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         
-        // 生成PDF
+        
         html2pdf().set(opt).from(element).save().then(() => {
-            // 恢复按钮状态
+            
             saveBtn.innerHTML = originalText;
             saveBtn.disabled = false;
             FeedbackSystem.showToast('简历已成功导出为PDF');
         }).catch(err => {
-            // 恢复按钮状态
+            
             saveBtn.innerHTML = originalText;
             saveBtn.disabled = false;
             FeedbackSystem.showToast('导出失败，请重试', 'error');
@@ -777,7 +777,7 @@ const ResumeGenerator = {
         });
     },
     
-    // 更新简历预览
+    
     updateResumePreview: function() {
         const preview = document.getElementById('resume-preview');
         if (!preview) return;
@@ -787,9 +787,9 @@ const ResumeGenerator = {
     }
 };
 
-// 初始化删除项目的事件监听器
+
 document.addEventListener('DOMContentLoaded', function() {
-    // 使用事件委托处理删除项目按钮的点击事件
+    
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
             const button = e.target.classList.contains('remove-item') ? e.target : e.target.closest('.remove-item');

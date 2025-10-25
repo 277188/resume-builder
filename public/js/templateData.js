@@ -1,6 +1,6 @@
-// 模板数据模块
+
 const TemplateData = {
-    // 默认数据
+    
     defaultResumeData: {
         personal: {
             name: "张三",
@@ -59,7 +59,7 @@ const TemplateData = {
         ],
     },
 
-    // 模板HTML生成器
+    
     generateTemplateHTML: function(templateId, data) {
         const templates = {
             '1': this.template1,
@@ -74,13 +74,13 @@ const TemplateData = {
         return this.template1(data);
     },
 
-    // 处理文本换行的辅助函数
+    
     formatTextWithLineBreaks: function(text) {
         if (!text) return '';
         return text.replace(/\n/g, '<br>');
     },
 
-    // 生成联系方式HTML
+    
     generateContactHTML: function(personal) {
         let contactHTML = '';
         if (personal.phone) {
@@ -104,7 +104,7 @@ const TemplateData = {
         return contactHTML;
     },
 
-    // 生成技能HTML
+    
     generateSkillsHTML: function(skills) {
         if (!skills || !Array.isArray(skills)) return '';
         
@@ -121,7 +121,7 @@ const TemplateData = {
         `).join('');
     },
 
-    // 生成经历HTML
+    
     generateExperienceHTML: function(experiences, type = 'experience') {
         if (!experiences || !Array.isArray(experiences)) return '';
         
@@ -134,7 +134,7 @@ const TemplateData = {
         `).join('');
     },
 
-    // 生成证书HTML
+    
     generateCertificationsHTML: function(certifications) {
         if (!certifications || !Array.isArray(certifications)) return '';
         
@@ -146,7 +146,7 @@ const TemplateData = {
         `).join('');
     },
 
-    // 生成校园活动HTML
+    
     generateActivitiesHTML: function(activities) {
         if (!activities || !Array.isArray(activities)) return '';
         
@@ -159,7 +159,7 @@ const TemplateData = {
         `).join('');
     },
 
-    // 模板1：现代专业风格
+    
     template1: function(data) {
         const contactHTML = this.generateContactHTML(data.personal);
         const skillsHTML = this.generateSkillsHTML(data.skills);
@@ -237,7 +237,7 @@ const TemplateData = {
         `;
     },
 
-    // 模板2：简洁居中风格 - 修复PDF导出问题
+    
     template2: function(data) {
         const contactHTML = this.generateContactHTML(data.personal);
         const skillsHTML = this.generateSkillsHTML(data.skills);
@@ -310,7 +310,7 @@ const TemplateData = {
         `;
     },
 
-    // 模板3：专业商务风格
+    
     template3: function(data) {
         const contactHTML = this.generateContactHTML(data.personal);
         const skillsHTML = this.generateSkillsHTML(data.skills);

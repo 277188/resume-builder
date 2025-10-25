@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     window.addEventListener('beforeunload', function(e) {
-        // 可以在这里添加保存提示
-        // e.preventDefault();
-        // e.returnValue = '';
+        
+        
+        
     });
 });

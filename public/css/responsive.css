@@ -1,4 +1,4 @@
-/* 响应式设计 */
+
 @media (max-width: 1200px) {
     .right-panel {
         width: 250px;
@@ -113,7 +113,6 @@
     }
 }
 
-/* 打印样式 */
 @media print {
     header, .left-panel, .right-panel, .preview-controls, footer, .modal {
         display: none !important;

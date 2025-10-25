@@ -1,11 +1,11 @@
-// 反馈系统模块
+
 const FeedbackSystem = {
-    // 使用相对路径，这样在生产环境和开发环境都能工作
+    
     apiBaseUrl: '/api',
     feedbackData: [],
     isAdmin: false,
     
-    // 初始化方法
+    
     init: function() {
         this.checkAdminMode();
         this.setupFeedbackModal();
@@ -13,7 +13,7 @@ const FeedbackSystem = {
         this.setupHelpModal();
         this.setupAdminPanel();
         
-        // 如果是管理员模式，从服务器加载数据
+        
         if (this.isAdmin) {
             this.loadFeedbackDataFromServer();
         }
@@ -21,9 +21,9 @@ const FeedbackSystem = {
         console.log('反馈系统初始化完成，管理员模式:', this.isAdmin);
     },
     
-    // 检查管理员模式
+    
     checkAdminMode: function() {
-        // 检查URL参数或本地存储中的管理员标志
+        
         const urlParams = new URLSearchParams(window.location.search);
         this.isAdmin = urlParams.has('admin') || localStorage.getItem('resumeAdminMode') === 'true';
         
@@ -36,7 +36,7 @@ const FeedbackSystem = {
         }
     },
     
-    // 设置反馈模态框
+    
     setupFeedbackModal: function() {
         const feedbackBtn = document.getElementById('feedback-btn');
         const feedbackModal = document.getElementById('feedback-modal');
@@ -72,7 +72,7 @@ const FeedbackSystem = {
             });
         }
         
-        // 点击模态框外部关闭
+        
         feedbackModal.addEventListener('click', (e) => {
             if (e.target === feedbackModal) {
                 feedbackModal.style.display = 'none';
@@ -80,7 +80,7 @@ const FeedbackSystem = {
         });
     },
     
-    // 设置关于模态框
+    
     setupAboutModal: function() {
         const aboutLink = document.getElementById('about-link');
         const aboutModal = document.getElementById('about-modal');
@@ -114,7 +114,7 @@ const FeedbackSystem = {
         });
     },
     
-    // 设置帮助模态框
+    
     setupHelpModal: function() {
         const helpLink = document.getElementById('help-link');
         
@@ -126,9 +126,9 @@ const FeedbackSystem = {
         });
     },
     
-    // 创建帮助模态框
+    
     createHelpModal: function() {
-        // 如果已经存在，先移除
+        
         const existingModal = document.getElementById('help-modal');
         if (existingModal) {
             existingModal.remove();
@@ -169,7 +169,7 @@ const FeedbackSystem = {
         
         document.body.appendChild(modal);
         
-        // 设置帮助模态框事件
+        
         const closeBtn = modal.querySelector('.close-modal');
         const closeHelpBtn = modal.querySelector('#close-help');
         
@@ -192,7 +192,7 @@ const FeedbackSystem = {
         });
     },
     
-    // 设置管理员面板
+    
     setupAdminPanel: function() {
         const adminBtn = document.getElementById('admin-btn');
         const adminModal = document.getElementById('feedback-admin-modal');
@@ -251,7 +251,7 @@ const FeedbackSystem = {
         });
     },
     
-    // 从服务器加载反馈数据
+    
     loadFeedbackDataFromServer: async function() {
         try {
             console.log('正在从服务器加载反馈数据...');
@@ -272,7 +272,7 @@ const FeedbackSystem = {
         }
     },
     
-    // 从本地存储加载（备用）
+    
     loadFeedbackDataFromLocal: function() {
         console.log('从本地存储加载反馈数据');
         const savedData = localStorage.getItem('resumeFeedbackData');
@@ -287,7 +287,7 @@ const FeedbackSystem = {
         this.renderFeedbackList();
     },
     
-    // 提交反馈
+    
     submitFeedback: async function() {
         const type = document.getElementById('feedback-type').value;
         const content = document.getElementById('feedback-content').value;
@@ -298,7 +298,7 @@ const FeedbackSystem = {
             return;
         }
         
-        // 创建反馈对象
+        
         const feedback = {
             type: type,
             content: content,
@@ -317,12 +317,12 @@ const FeedbackSystem = {
             
             if (response.ok) {
                 this.showToast('感谢您的反馈！');
-                // 关闭模态框并清空表单
+                
                 document.getElementById('feedback-modal').style.display = 'none';
                 document.getElementById('feedback-content').value = '';
                 document.getElementById('contact-info').value = '';
                 
-                // 如果是管理员模式，重新加载数据
+                
                 if (this.isAdmin) {
                     this.loadFeedbackDataFromServer();
                 }
@@ -331,12 +331,12 @@ const FeedbackSystem = {
             }
         } catch (error) {
             console.error('提交反馈到服务器失败:', error);
-            // 服务器提交失败，保存到本地存储
+            
             this.submitFeedbackToLocal(feedback);
         }
     },
     
-    // 提交到本地存储（备用）
+    
     submitFeedbackToLocal: function(feedback) {
         feedback.id = Date.now().toString();
         feedback.date = new Date().toLocaleString('zh-CN');
@@ -351,7 +351,7 @@ const FeedbackSystem = {
         document.getElementById('contact-info').value = '';
     },
     
-    // 标记为已读
+    
     markAsRead: async function(id) {
         console.log('标记反馈为已读:', id);
         try {
@@ -363,7 +363,7 @@ const FeedbackSystem = {
             });
             
             if (response.ok) {
-                // 更新本地数据
+                
                 const feedback = this.feedbackData.find(f => f.id === id);
                 if (feedback) {
                     feedback.read = true;
@@ -376,7 +376,7 @@ const FeedbackSystem = {
             }
         } catch (error) {
             console.error('标记已读失败:', error);
-            // 本地处理
+            
             const feedback = this.feedbackData.find(f => f.id === id);
             if (feedback) {
                 feedback.read = true;
@@ -388,7 +388,7 @@ const FeedbackSystem = {
         }
     },
     
-    // 删除反馈
+    
     deleteFeedback: async function(id) {
         if (!confirm('确定要删除这条反馈吗？此操作不可撤销。')) {
             return;
@@ -410,7 +410,7 @@ const FeedbackSystem = {
             }
         } catch (error) {
             console.error('删除反馈失败:', error);
-            // 本地处理
+            
             this.feedbackData = this.feedbackData.filter(f => f.id !== id);
             localStorage.setItem('resumeFeedbackData', JSON.stringify(this.feedbackData));
             this.updateAdminStats();
@@ -419,14 +419,14 @@ const FeedbackSystem = {
         }
     },
     
-    // 标记所有为已读
+    
     markAllAsRead: function() {
         console.log('标记所有反馈为已读');
         this.feedbackData.forEach(feedback => {
             feedback.read = true;
         });
         
-        // 尝试同步到服务器
+        
         this.syncAllReadStatus();
         
         localStorage.setItem('resumeFeedbackData', JSON.stringify(this.feedbackData));
@@ -435,7 +435,7 @@ const FeedbackSystem = {
         this.showToast('所有反馈已标记为已读');
     },
     
-    // 同步所有已读状态到服务器
+    
     syncAllReadStatus: async function() {
         try {
             await fetch(`${this.apiBaseUrl}/feedback-mark-all-read`, {
@@ -447,7 +447,7 @@ const FeedbackSystem = {
         }
     },
     
-    // 导出反馈数据
+    
     exportFeedbackData: function() {
         const dataStr = JSON.stringify(this.feedbackData, null, 2);
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
@@ -462,7 +462,7 @@ const FeedbackSystem = {
         this.showToast('反馈数据已导出');
     },
     
-    // 更新管理员统计
+    
     updateAdminStats: function() {
         const total = this.feedbackData.length;
         const unread = this.feedbackData.filter(f => !f.read).length;
@@ -479,7 +479,7 @@ const FeedbackSystem = {
         console.log('统计更新 - 总数:', total, '未读:', unread, '错误报告:', bugs);
     },
     
-    // 渲染反馈列表
+    
     renderFeedbackList: function() {
         const feedbackList = document.getElementById('feedback-list');
         const filterSelect = document.getElementById('feedback-filter');
@@ -539,7 +539,7 @@ const FeedbackSystem = {
             </div>
         `).join('');
         
-        // 添加事件监听器
+        
         feedbackList.querySelectorAll('.mark-read').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = e.target.closest('.mark-read').dataset.id;
@@ -555,7 +555,7 @@ const FeedbackSystem = {
         });
     },
     
-    // 获取反馈类型文本
+    
     getTypeText: function(type) {
         const typeMap = {
             'bug': '错误报告',
@@ -566,15 +566,15 @@ const FeedbackSystem = {
         return typeMap[type] || type;
     },
     
-    // 格式化反馈内容
+    
     formatFeedbackContent: function(content) {
-        // 简单的换行处理
+        
         return content.replace(/\n/g, '<br>');
     },
     
-    // 显示提示消息
+    
     showToast: function(message, type = 'success') {
-        // 移除现有的toast
+        
         const existingToast = document.querySelector('.toast');
         if (existingToast) {
             existingToast.remove();
@@ -586,12 +586,12 @@ const FeedbackSystem = {
         
         document.body.appendChild(toast);
         
-        // 显示toast
+        
         setTimeout(() => {
             toast.classList.add('show');
         }, 100);
         
-        // 自动隐藏
+        
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => {
