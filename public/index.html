@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简历生成器 - 轻松创建专业简历</title>
+    <meta name="description" content="免费在线简历生成器，多种模板选择，拖拽式编辑，实时预览">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                <span>简历生成器</span>
+            </div>
+            
+            <div class="nav-controls">
+                <div class="template-selector">
+                    <span>模板:</span>
+                    <div class="template-option template-1 active" data-template="1" title="模板1 - 现代风格"></div>
+                    <div class="template-option template-2" data-template="2" title="模板2 - 简约风格"></div>
+                    <div class="template-option template-3" data-template="3" title="模板3 - 专业风格"></div>
+                </div>
+                
+                <button class="btn btn-secondary" id="preview-toggle">
+                    <i class="fas fa-eye"></i>
+                    <span>预览</span>
+                </button>
+                
+                <button class="btn btn-primary" id="save-resume">
+                    <i class="fas fa-save"></i>
+                    <span>保存简历</span>
+                </button>
+                
+                <button class="btn btn-secondary" id="feedback-btn">
+                    <i class="fas fa-comment"></i>
+                    <span>改进建议</span>
+                </button>
+                
+                <!-- 管理员入口 -->
+                <button class="btn btn-secondary admin-btn" id="admin-btn" style="display: none;">
+                    <i class="fas fa-cog"></i>
+                    <span>管理反馈</span>
+                </button>
+            </div>
+        </header>
+        
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <!-- 左侧面板 -->
+            <div class="left-panel">
+                <div class="panel-title">
+                    <span>简历板块</span>
+                    <i class="fas fa-arrows-alt"></i>
+                </div>
+                
+                <div id="sections-list">
+                    <!-- 板块将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="add-section" id="add-section">
+                    <i class="fas fa-plus"></i>
+                    <span>添加板块</span>
+                </div>
+            </div>
+            
+            <!-- 中间预览区域 -->
+            <div class="preview-area">
+                <div class="preview-controls">
+                    <button class="btn btn-secondary" id="zoom-out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <span class="zoom-level">100%</span>
+                    <button class="btn btn-secondary" id="zoom-in">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button class="btn btn-secondary" id="print-resume">
+                        <i class="fas fa-print"></i>
+                        <span>打印</span>
+                    </button>
+                </div>
+                
+                <div class="resume-container">
+                    <div class="resume-preview template-1-style" id="resume-preview">
+                        <!-- 简历内容将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧面板 -->
+            <div class="right-panel">
+                <div class="panel-title">
+                    <span>编辑内容</span>
+                    <i class="fas fa-edit"></i>
+                </div>
+                
+                <div id="editor-content">
+                    <!-- 编辑表单将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 简历生成器 - 轻松创建专业简历</p>
+                <div class="footer-links">
+                    <a href="#" id="about-link">关于</a>
+                    <a href="#" id="help-link">帮助</a>
+                    <a href="#" id="privacy-link">隐私政策</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- 反馈模态框 -->
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">改进建议</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedback-type">反馈类型</label>
+                <select id="feedback-type" class="form-control">
+                    <option value="bug">错误报告</option>
+                    <option value="suggestion">功能建议</option>
+                    <option value="template">模板建议</option>
+                    <option value="other">其他</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedback-content">详细描述</label>
+                <textarea id="feedback-content" class="form-control" placeholder="请详细描述您的建议或遇到的问题..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-info">联系方式 (可选)</label>
+                <input type="text" id="contact-info" class="form-control" placeholder="邮箱或电话">
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-feedback">取消</button>
+                <button class="btn btn-primary" id="submit-feedback">提交反馈</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 关于模态框 -->
+    <div class="modal" id="about-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">关于简历生成器</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <p>简历生成器是一个免费的在线工具，帮助用户快速创建专业的简历。</p>
+                <p>主要功能：</p>
+                <ul>
+                    <li>多种简历模板选择</li>
+                    <li>拖拽式板块管理</li>
+                    <li>实时预览效果</li>
+                    <li>导出为PDF格式</li>
+                    <li>左侧板块与简历内容联动</li>
+                </ul>
+                <p>版本: 1.7.0</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="close-about">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 反馈管理面板 -->
+    <div class="modal" id="feedback-admin-modal">
+        <div class="modal-content admin-modal">
+            <div class="modal-header">
+                <div class="modal-title">反馈管理</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="admin-controls">
+                <div class="admin-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-feedback">0</span>
+                        <span class="stat-label">总反馈数</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="unread-feedback">0</span>
+                        <span class="stat-label">未读反馈</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="bug-reports">0</span>
+                        <span class="stat-label">错误报告</span>
+                    </div>
+                </div>
+                
+                <div class="filter-controls">
+                    <select id="feedback-filter" class="form-control">
+                        <option value="all">全部反馈</option>
+                        <option value="unread">仅未读</option>
+                        <option value="bug">错误报告</option>
+                        <option value="suggestion">功能建议</option>
+                        <option value="template">模板建议</option>
+                        <option value="other">其他</option>
+                    </select>
+                    
+                    <button class="btn btn-secondary" id="export-feedback">
+                        <i class="fas fa-download"></i>
+                        <span>导出反馈</span>
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="mark-all-read">
+                        <i class="fas fa-check-double"></i>
+                        <span>全部标记为已读</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="feedback-list" id="feedback-list">
+                <!-- 反馈列表将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="close-admin">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入JavaScript库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <!-- 引入项目JavaScript文件 -->
+    <script src="js/templateData.js"></script>
+    <script src="js/feedbackSystem.js"></script>
+    <script src="js/resumeGenerator.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

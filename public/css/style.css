@@ -1,0 +1,926 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --dark-color: #34495e;
+    --accent-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --info-color: #1abc9c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 顶部导航栏 */
+header {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.nav-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.template-selector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.template-option {
+    width: 40px;
+    height: 50px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.template-option.active {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.template-1 { background: linear-gradient(135deg, #3498db 0%, #3498db 50%, #2c3e50 50%, #2c3e50 100%); }
+.template-2 { background: linear-gradient(135deg, #e74c3c 0%, #e74c3c 50%, #2c3e50 50%, #2c3e50 100%); }
+.template-3 { background: linear-gradient(135deg, #2ecc71 0%, #2ecc71 50%, #2c3e50 50%, #2c3e50 100%); }
+
+/* 主要内容区域 */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 左侧面板 */
+.left-panel {
+    width: 250px;
+    background-color: white;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.panel-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resume-section {
+    background-color: var(--light-color);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.resume-section:hover {
+    background-color: #dfe6e9;
+}
+
+.resume-section.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.resume-section.active i {
+    color: white;
+}
+
+.section-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.resume-section i {
+    color: var(--dark-color);
+    opacity: 0.6;
+}
+
+.delete-section {
+    color: #e74c3c;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.delete-section:hover {
+    color: #c0392b;
+}
+
+.add-section {
+    background-color: transparent;
+    border: 2px dashed #bdc3c7;
+    color: #7f8c8d;
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.add-section:hover {
+    background-color: #f1f2f6;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* 中间预览区域 */
+.preview-area {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f3f5;
+}
+
+.preview-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.zoom-level {
+    font-weight: bold;
+    min-width: 50px;
+    text-align: center;
+}
+
+.resume-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+}
+
+/* 更新简历预览容器 */
+.resume-preview {
+    width: 210mm;
+    min-height: 297mm;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20mm;
+    position: relative;
+    transform-origin: top center;
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+/* 通用简历样式 */
+.resume-header {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+}
+
+.resume-header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.resume-header p {
+    font-size: 18px;
+    color: #3498db;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #bdc3c7;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.experience-item, .education-item {
+    margin-bottom: 20px;
+    page-break-inside: avoid;
+}
+
+.item-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.item-subtitle {
+    color: #7f8c8d;
+    font-style: italic;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.skill-item {
+    margin-bottom: 12px;
+    page-break-inside: avoid;
+}
+
+.skill-name {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.skill-bar {
+    height: 8px;
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-level {
+    height: 100%;
+    background-color: #3498db;
+    border-radius: 4px;
+}
+
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.contact-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+/* 模板1：现代专业风格 */
+.template-1-style .resume-header {
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+    color: white;
+    padding: 30px;
+    margin: -20mm -20mm 25px -20mm;
+    text-align: center;
+}
+
+.template-1-style .resume-header h1 {
+    color: white;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.template-1-style .resume-header p {
+    color: #ecf0f1;
+    font-size: 20px;
+}
+
+.template-1-style .resume-body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    min-height: calc(297mm - 40mm - 100px);
+}
+
+.template-1-style .sidebar {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.template-1-style .sidebar .section-title {
+    color: #3498db;
+    border-bottom-color: #3498db;
+}
+
+.template-1-style .main-content-area .section-title {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+}
+
+/* 模板2：简洁居中风格 - 修复PDF导出问题 */
+.template-2-style {
+    text-align: center;
+}
+
+.template-2-style .resume-header {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 35px 30px;
+    margin: -20mm -20mm 30px -20mm;
+    text-align: center;
+}
+
+.template-2-style .resume-header h1 {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.template-2-style .resume-header p {
+    color: #ecf0f1;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.template-2-style .resume-body {
+    padding: 0 20px;
+    min-height: calc(297mm - 40mm - 150px);
+}
+
+.template-2-style .section {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.template-2-style .section-title {
+    text-align: center;
+    font-size: 20px;
+    color: #e74c3c;
+    border-bottom: 2px solid #e74c3c;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.template-2-style .experience-item,
+.template-2-style .education-item {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.template-2-style .contact-info {
+    justify-content: center;
+    margin-top: 15px;
+}
+
+/* 模板3：专业商务风格 */
+.template-3-style .resume-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 30px;
+    margin: -20mm -20mm 25px -20mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.template-3-style .resume-header h1 {
+    color: white;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.template-3-style .resume-header p {
+    color: #bdc3c7;
+    font-size: 18px;
+}
+
+.template-3-style .resume-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    padding: 0 10px;
+    min-height: calc(297mm - 40mm - 100px);
+}
+
+.template-3-style .sidebar {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 6px;
+    height: fit-content;
+}
+
+.template-3-style .sidebar .section-title {
+    color: #2c3e50;
+    border-bottom: 2px solid #34495e;
+}
+
+.template-3-style .main-content-area .section-title {
+    color: #2c3e50;
+    border-bottom: 1px solid #bdc3c7;
+}
+
+/* 右侧面板 */
+.right-panel {
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* 编辑器激活状态 */
+.editor-section {
+    display: none;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.editor-section.active {
+    display: block;
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--primary-color);
+}
+
+/* 页脚 */
+footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-body ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.modal-body li {
+    margin-bottom: 5px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 反馈管理样式 */
+.admin-btn {
+    background-color: var(--info-color) !important;
+    color: white !important;
+}
+
+.admin-modal {
+    width: 90%;
+    max-width: 1000px;
+}
+
+.admin-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.feedback-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.feedback-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.feedback-item:last-child {
+    border-bottom: none;
+}
+
+.feedback-item.unread {
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--primary-color);
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.feedback-type {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.feedback-type.bug {
+    background-color: #ffeaa7;
+    color: #e17055;
+}
+
+.feedback-type.suggestion {
+    background-color: #a29bfe;
+    color: white;
+}
+
+.feedback-type.template {
+    background-color: #81ecec;
+    color: #00a8a8;
+}
+
+.feedback-type.other {
+    background-color: #dfe6e9;
+    color: #636e72;
+}
+
+.feedback-date {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.feedback-content {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.feedback-contact {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.feedback-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.feedback-item.read .feedback-header {
+    opacity: 0.7;
+}
+
+.no-feedback {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+}
+
+.no-feedback i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* 加载动画 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 提示信息 */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background-color: var(--success-color);
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    z-index: 1001;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast.error {
+    background-color: var(--accent-color);
+}
+
+.toast.warning {
+    background-color: var(--warning-color);
+}
+
+/* 拖拽样式 */
+.sortable-ghost {
+    opacity: 0.4;
+}
+
+.sortable-chosen {
+    background-color: var(--light-color);
+}
+
+.sortable-drag {
+    transform: rotate(5deg);
+}
+
+/* 打印优化 */
+@media print {
+    header, .left-panel, .right-panel, .preview-controls, footer, .modal {
+        display: none !important;
+    }
+    
+    .preview-area {
+        padding: 0;
+        overflow: visible;
+    }
+    
+    .resume-container {
+        display: block;
+    }
+    
+    .resume-preview {
+        width: 100%;
+        box-shadow: none;
+        padding: 15mm;
+        margin: 0;
+        transform: none !important;
+    }
+    
+    .template-1-style .resume-header,
+    .template-2-style .resume-header,
+    .template-3-style .resume-header {
+        margin: 0 0 20px 0;
+        padding: 25px;
+    }
+    
+    .template-1-style .resume-body,
+    .template-3-style .resume-body {
+        min-height: auto;
+    }
+    
+    /* 确保模板2在打印时保持居中 */
+    .template-2-style {
+        text-align: center;
+    }
+    
+    .template-2-style .resume-body {
+        padding: 0;
+    }
+    
+    .template-2-style .section {
+        text-align: left;
+    }
+    
+    .template-2-style .section-title {
+        text-align: center;
+    }
+    
+    /* 避免内容被分割 */
+    .section, .experience-item, .education-item, .skill-item {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .editor-section.active {
+        border-left: none;
+        border-top: 4px solid var(--primary-color);
+    }
+}
+
+/* 响应式设计：小屏幕时改为单列布局 */
+@media (max-width: 768px) {
+    .template-1-style .resume-body,
+    .template-3-style .resume-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .template-1-style .sidebar,
+    .template-3-style .sidebar {
+        order: 2;
+    }
+    
+    .template-1-style .main-content-area,
+    .template-3-style .main-content-area {
+        order: 1;
+    }
+    
+    .template-3-style .resume-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

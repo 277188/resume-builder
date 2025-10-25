@@ -1,0 +1,147 @@
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .right-panel {
+        width: 250px;
+    }
+    
+    .left-panel {
+        width: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .left-panel, .right-panel {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+    }
+    
+    .preview-area {
+        order: -1;
+        padding: 15px;
+    }
+    
+    .resume-preview {
+        width: 100%;
+        min-height: auto;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .template-selector {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .nav-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .resume-preview {
+        padding: 15mm;
+    }
+    
+    .template-1-style .resume-body,
+    .template-3-style .resume-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn span {
+        display: none;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+    }
+    
+    .preview-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .resume-preview {
+        padding: 10mm;
+    }
+    
+    .template-1-style .resume-header,
+    .template-2-style .resume-header,
+    .template-3-style .resume-header {
+        padding: 20px;
+        margin: -10mm -10mm 15px -10mm;
+    }
+    
+    .left-panel, .right-panel {
+        padding: 15px;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    header, .left-panel, .right-panel, .preview-controls, footer, .modal {
+        display: none !important;
+    }
+    
+    .preview-area {
+        padding: 0;
+        overflow: visible;
+    }
+    
+    .resume-container {
+        display: block;
+    }
+    
+    .resume-preview {
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .template-1-style .resume-header,
+    .template-2-style .resume-header,
+    .template-3-style .resume-header {
+        margin: 0;
+    }
+    
+    body {
+        background: white;
+    }
+}
