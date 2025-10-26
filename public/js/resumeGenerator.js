@@ -749,19 +749,22 @@ const ResumeGenerator = {
         const saveBtn = document.getElementById('save-resume');
         const originalText = saveBtn.innerHTML;
         
-        
         saveBtn.innerHTML = '<div class="loading"></div> 生成中...';
         saveBtn.disabled = true;
         
-        
         const opt = {
-            margin: 10,
+            margin: [10,10,10,10]
             filename: `${this.resumeData.personal.name}_简历.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            html2canvas: { 
+                scale: 2,
+                useCORS: ture,
+                logging: false,
+                width: element.scrollWidth,
+                height: element.scrollHeight
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' ,compress: true}
         };
-        
         
         html2pdf().set(opt).from(element).save().then(() => {
             
@@ -803,4 +806,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
 });
