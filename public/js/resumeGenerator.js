@@ -748,6 +748,11 @@ const ResumeGenerator = {
     const element = document.getElementById('resume-preview');
     const saveBtn = document.getElementById('save-resume');
     const originalText = saveBtn.innerHTML;
+    const originalTransform = element.style.transform;
+    const originalMargin = element.style.margin;
+    
+    element.style.transform = 'none';
+    element.style.margin = '0 auto';
     
     saveBtn.innerHTML = '<div class="loading"></div> 生成中...';
     saveBtn.disabled = true;
@@ -763,15 +768,19 @@ const ResumeGenerator = {
             width: element.scrollWidth,
             height: element.scrollHeight
         },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' ,compress: true}
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
     };
     
     html2pdf().set(opt).from(element).save().then(() => {
+        element.style.transform = originalTransform;
+        element.style.margin = originalMargin;
         
         saveBtn.innerHTML = originalText;
         saveBtn.disabled = false;
         FeedbackSystem.showToast('简历已成功导出为PDF');
     }).catch(err => {
+        element.style.transform = originalTransform;
+        element.style.margin = originalMargin;
         
         saveBtn.innerHTML = originalText;
         saveBtn.disabled = false;
@@ -808,4 +817,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+
 
