@@ -154,12 +154,6 @@ const FeedbackSystem = {
                         <li><strong>保存简历</strong>：点击"保存简历"导出PDF文件</li>
                         <li><strong>打印</strong>：点击"打印"按钮或使用Ctrl+P</li>
                     </ul>
-                    <h3>快捷键</h3>
-                    <ul>
-                        <li><strong>Ctrl+S</strong>：保存简历为PDF</li>
-                        <li><strong>Ctrl+P</strong>：打印简历</li>
-                        <li><strong>Ctrl+Shift+A</strong>：启用管理员模式</li>
-                    </ul>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" id="close-help">关闭</button>
@@ -601,4 +595,5 @@ const FeedbackSystem = {
             }, 300);
         }, 3000);
     }
+
 };
