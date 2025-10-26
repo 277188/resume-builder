@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "services": [
+    {
+      "name": "resume-builder",
+      "image": "node:16-alpine",
+      "script": {
+        "build": "npm install",
+        "start": "npm start"
+      },
+      "ports": [
+        {
+          "protocol": "HTTP",
+          "port": 3000,
+          "targetPort": 3000
+        }
+      ],
+      "resources": {
+        "cpu": 0.25,
+        "mem": 0.5
+      },
+      "traffic": 100
+    }
+  ]
+}
