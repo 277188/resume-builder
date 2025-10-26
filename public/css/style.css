@@ -844,17 +844,19 @@ footer {
     .preview-area {
         padding: 0;
         overflow: visible;
+        display: block !important;
     }
     
     .resume-container {
         display: block;
+        width: 100% !important;
     }
     
     .resume-preview {
         width: 100%;
         box-shadow: none;
         padding: 15mm;
-        margin: 0;
+        margin: 0 auto !important;
         transform: none !important;
     }
     
@@ -892,6 +894,14 @@ footer {
         page-break-inside: avoid;
         break-inside: avoid;
     }
+    body, html {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    @page {
+        margin: 0;
+    }
 }
 
 /* 响应式调整 */
@@ -923,4 +933,22 @@ footer {
         flex-direction: column;
         gap: 15px;
     }
+
+}
+
+/* ===== PDF导出居中样式 - 新增代码 ===== */
+
+/* PDF导出专用居中样式 */
+@media all {
+    .resume-preview {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* 确保在PDF中居中 */
+.resume-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
 }
