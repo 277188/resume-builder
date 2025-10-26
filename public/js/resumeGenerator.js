@@ -745,40 +745,40 @@ const ResumeGenerator = {
     
     
     exportToPDF: function() {
-        const element = document.getElementById('resume-preview');
-        const saveBtn = document.getElementById('save-resume');
-        const originalText = saveBtn.innerHTML;
+    const element = document.getElementById('resume-preview');
+    const saveBtn = document.getElementById('save-resume');
+    const originalText = saveBtn.innerHTML;
+    
+    saveBtn.innerHTML = '<div class="loading"></div> 生成中...';
+    saveBtn.disabled = true;
+    
+    const opt = {
+        margin: [10,10,10,10],
+        filename: `${this.resumeData.personal.name}_简历.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            width: element.scrollWidth,
+            height: element.scrollHeight
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' ,compress: true}
+    };
+    
+    html2pdf().set(opt).from(element).save().then(() => {
         
-        saveBtn.innerHTML = '<div class="loading"></div> 生成中...';
-        saveBtn.disabled = true;
+        saveBtn.innerHTML = originalText;
+        saveBtn.disabled = false;
+        FeedbackSystem.showToast('简历已成功导出为PDF');
+    }).catch(err => {
         
-        const opt = {
-            margin: [10,10,10,10]
-            filename: `${this.resumeData.personal.name}_简历.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2,
-                useCORS: ture,
-                logging: false,
-                width: element.scrollWidth,
-                height: element.scrollHeight
-            },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' ,compress: true}
-        };
-        
-        html2pdf().set(opt).from(element).save().then(() => {
-            
-            saveBtn.innerHTML = originalText;
-            saveBtn.disabled = false;
-            FeedbackSystem.showToast('简历已成功导出为PDF');
-        }).catch(err => {
-            
-            saveBtn.innerHTML = originalText;
-            saveBtn.disabled = false;
-            FeedbackSystem.showToast('导出失败，请重试', 'error');
-            console.error('PDF导出错误:', err);
-        });
-    },
+        saveBtn.innerHTML = originalText;
+        saveBtn.disabled = false;
+        FeedbackSystem.showToast('导出失败，请重试', 'error');
+        console.error('PDF导出错误:', err);
+    });
+},
     
     
     updateResumePreview: function() {
@@ -808,3 +808,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+
