@@ -27,7 +27,7 @@
 - **居中布局**：PDF导出自动居中，专业美观
 
 ## 在线使用
-直接访问：bynlk-jl.vercel.app
+直接访问：https://bynlk-jl.vercel.app/
 
 ##  使用方法
 
