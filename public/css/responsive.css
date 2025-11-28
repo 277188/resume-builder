@@ -1,11 +1,6 @@
-
 @media (max-width: 1200px) {
-    .right-panel {
-        width: 250px;
-    }
-    
-    .left-panel {
-        width: 220px;
+    .template-10-style .resume-body {
+        grid-template-columns: 25% 75%;
     }
 }
 
@@ -17,9 +12,28 @@
     .left-panel, .right-panel {
         width: 100%;
         height: auto;
-        max-height: 40vh;
+        max-height: none; 
+        order: initial;
     }
     
+    .left-panel {
+        order: 0;
+        /* 修复：小屏幕下隐藏左侧面板的过渡效果 */
+        max-height: 80vh; /* 确保在显示时有最大高度 */
+        width: 100%;
+        transition: max-height 0.3s, padding 0.3s;
+    }
+
+    /* Bug 3 修复：小屏幕下隐藏左侧面板 */
+    .container.panel-hidden .left-panel {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+        width: 100%;
+        transform: none; 
+    }
+
     .preview-area {
         order: -1;
         padding: 15px;
@@ -28,6 +42,8 @@
     .resume-preview {
         width: 100%;
         min-height: auto;
+        padding: 20mm 15mm; 
+        box-shadow: none; 
     }
     
     .footer-content {
@@ -38,6 +54,30 @@
     .nav-controls {
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    /* 所有双列模板在小屏幕下切换为单列 */
+    .template-1-style .resume-body,
+    .template-3-style .resume-body,
+    .template-7-style .resume-body,
+    .template-10-style .resume-body {
+        grid-template-columns: 1fr;
+    }
+
+    /* 模板 3 和 10 的特殊边栏样式调整 */
+    .template-3-style .sidebar-content,
+    .template-10-style .sidebar-content {
+        padding: 15px;
+        border-right: none;
+        border-bottom: 5px solid var(--primary-color);
+    }
+    .template-3-style .main-content-area,
+    .template-10-style .main-content-area {
+        padding: 15px;
+    }
+    
+    .template-3-style .resume-header {
+        margin: -15px -15px 20px -15px; 
     }
 }
 
@@ -53,24 +93,18 @@
     }
     
     .template-selector {
-        order: 1;
-        width: 100%;
+        flex-wrap: wrap;
         justify-content: center;
-        margin-top: 10px;
+        padding: 5px;
+        width: 100%;
     }
     
     .nav-controls {
         width: 100%;
-        justify-content: space-between;
     }
-    
+
     .resume-preview {
         padding: 15mm;
-    }
-    
-    .template-1-style .resume-body,
-    .template-3-style .resume-body {
-        grid-template-columns: 1fr;
     }
     
     .modal-content {
@@ -96,9 +130,12 @@
         padding: 10mm;
     }
     
+    /* 调整所有模板的 Header 边距 */
     .template-1-style .resume-header,
     .template-2-style .resume-header,
-    .template-3-style .resume-header {
+    .template-3-style .resume-header,
+    .template-4-style .resume-header,
+    .template-6-style .resume-header {
         padding: 20px;
         margin: -10mm -10mm 15px -10mm;
     }
@@ -111,36 +148,60 @@
         flex-direction: column;
         gap: 10px;
     }
+
+    .admin-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
 @media print {
-    header, .left-panel, .right-panel, .preview-controls, footer, .modal {
+    header, .left-panel, .preview-controls, .footer, .modal {
         display: none !important;
     }
     
-    .preview-area {
-        padding: 0;
-        overflow: visible;
+    .main-content {
+        flex-direction: column !important;
     }
     
-    .resume-container {
-        display: block;
+    .right-panel {
+        padding: 0 !important;
+        background-color: white !important;
+        width: 100% !important;
+        flex-grow: 1 !important;
+        overflow: visible !important;
+    }
+    
+    .preview-area {
+        padding: 0 !important;
+        display: block !important;
+        overflow: visible !important;
     }
     
     .resume-preview {
-        width: 100%;
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
+        width: 210mm !important;
+        min-height: 297mm !important;
+        box-shadow: none !important;
+        transform: none !important;
+        /* 打印时移除所有模板的特殊 padding 和 margin，全部居中 */
+        padding: 20mm 15mm !important; 
     }
     
-    .template-1-style .resume-header,
-    .template-2-style .resume-header,
-    .template-3-style .resume-header {
-        margin: 0;
+    /* 打印时强制所有多列模板为单列，避免截断 */
+    .resume-body {
+        display: block !important;
     }
-    
-    body {
-        background: white;
+    .sidebar-content, .main-content-area {
+        padding: 0 !important;
+        border: none !important;
+        background: none !important;
+        color: inherit !important;
+        width: 100% !important;
+    }
+    .template-3-style .resume-header,
+    .template-6-style .resume-header,
+    .template-4-style .resume-header {
+        margin: 0 !important;
+        border-radius: 0 !important;
     }
 }
