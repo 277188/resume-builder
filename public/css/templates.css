@@ -1,0 +1,349 @@
+:root {
+    --primary-color: #3b82f6;
+    --accent-color: #ef4444;
+    --panel-width: 380px;
+    --border-color: #e2e8f0;
+    --text-color: #334155;
+    --panel-bg: #ffffff;
+}
+
+/* ============================================
+   1. 导航栏功能按钮优化
+============================================ */
+.icon-group { 
+    display: flex; 
+    gap: 8px; 
+    align-items: center; 
+}
+
+.icon-btn { 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 6px; 
+    border: 1px solid var(--border-color); 
+    background: #fff; 
+    cursor: pointer; 
+    color: #555; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover { 
+    background: #f8fafc; 
+    border-color: var(--primary-color); 
+    color: var(--primary-color); 
+}
+
+.highlight-btn { 
+    background: var(--primary-color); 
+    color: #fff; 
+    border: none; 
+}
+
+.highlight-btn:hover { 
+    background: #2563eb; 
+    color: #fff; 
+}
+
+/* ============================================
+   2. 侧边栏布局 (Flex Column)
+============================================ */
+.editor-panel.left-panel {
+    width: var(--panel-width);
+    min-width: 60px;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border-color);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s;
+    padding: 12px;
+    position: relative;
+    z-index: 50;
+    overflow: hidden;
+}
+
+/* 滚动区域 */
+#draggable-sections-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+    margin-bottom: 10px;
+}
+
+/* 自定义滚动条 */
+#draggable-sections-wrapper::-webkit-scrollbar { 
+    width: 4px; 
+}
+
+#draggable-sections-wrapper::-webkit-scrollbar-thumb { 
+    background: #cbd5e1; 
+    border-radius: 4px; 
+}
+
+/* ============================================
+   3. 侧边栏收起状态
+============================================ */
+.left-panel.collapsed {
+    width: 68px;
+    padding: 15px 8px;
+}
+
+/* 收起时隐藏的元素 */
+.left-panel.collapsed .font-format-group,
+.left-panel.collapsed #draggable-sections-wrapper,
+.left-panel.collapsed .sidebar-toggle,
+.left-panel.collapsed .footer-content-full,
+.left-panel.collapsed #module-add-placeholder {
+    display: none !important;
+}
+
+/* 收起时显示的元素 */
+.sidebar-expand { 
+    display: none; 
+    margin: 0 auto 20px; 
+}
+
+.left-panel.collapsed .sidebar-expand { 
+    display: flex; 
+}
+
+.icon-only-btn { 
+    display: none; 
+    width: 100%; 
+    text-align: center; 
+    background: none; 
+    border: none; 
+    font-size: 1.2rem; 
+    cursor: pointer; 
+    color: var(--text-color); 
+    padding: 10px; 
+}
+
+.icon-only-btn:hover { 
+    color: var(--primary-color); 
+    background: rgba(0,0,0,0.05); 
+    border-radius: 8px; 
+}
+
+.left-panel.collapsed .icon-only-btn { 
+    display: block; 
+}
+
+/* ============================================
+   4. 顶部工具栏
+============================================ */
+.left-panel-top { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    margin-bottom: 10px; 
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 10px; 
+}
+
+.toolbar-row { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    width: 100%; 
+}
+
+.font-format-group { 
+    display: flex; 
+    gap: 5px; 
+    flex-wrap: wrap; 
+}
+
+.format-btn { 
+    padding: 6px 10px; 
+    border: 1px solid var(--border-color); 
+    background: #fff; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    color: var(--text-color); 
+    font-size: 0.9rem; 
+    transition: all 0.2s;
+}
+
+.format-btn:hover { 
+    background: #f1f5f9; 
+    border-color: var(--primary-color); 
+    color: var(--primary-color); 
+}
+
+/* ============================================
+   5. 添加模块按钮
+============================================ */
+.add-module-container { 
+    text-align: center; 
+    padding: 15px 0; 
+}
+
+.add-module-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px dashed #cbd5e1;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.add-module-btn:hover { 
+    border-color: var(--primary-color); 
+    color: var(--primary-color); 
+    transform: rotate(90deg); 
+    background: #eff6ff; 
+}
+
+/* ============================================
+   6. 底部信息栏
+============================================ */
+.sidebar-footer-info {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    min-height: 40px;
+}
+
+.footer-content-full { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    font-size: 0.85rem; 
+    color: #64748b; 
+}
+
+.footer-content-full a { 
+    color: inherit; 
+    text-decoration: none; 
+    transition: color 0.2s; 
+}
+
+.footer-content-full a:hover { 
+    color: var(--primary-color); 
+}
+
+.settings-btn-text { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    color: inherit; 
+    display: flex; 
+    align-items: center; 
+    gap: 6px; 
+    font-size: inherit; 
+}
+
+.settings-btn-text:hover { 
+    color: var(--primary-color); 
+}
+
+/* ============================================
+   7. 图片拖拽功能
+============================================ */
+.draggable-img-wrapper {
+    position: absolute;
+    display: inline-block;
+    cursor: grab;
+    border: 2px solid transparent;
+}
+
+.draggable-img-wrapper:hover, 
+.draggable-img-wrapper.active { 
+    border: 2px dashed var(--primary-color); 
+}
+
+.draggable-img-wrapper img { 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none;
+}
+
+.resize-handle {
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+    display: none;
+}
+
+.draggable-img-wrapper:hover .resize-handle { 
+    display: block; 
+}
+
+/* ============================================
+   8. Modal 样式
+============================================ */
+.modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 10px; 
+}
+
+.close-modal { 
+    background: none; 
+    border: none; 
+    font-size: 1.5rem; 
+    cursor: pointer; 
+    color: #999; 
+}
+
+.close-modal:hover { 
+    color: #333; 
+}
+
+/* ============================================
+   9. Dark Mode 适配
+============================================ */
+body.dark-mode { 
+    --panel-bg: #1e293b; 
+    --text-color: #e2e8f0; 
+    --border-color: #334155; 
+}
+
+body.dark-mode .icon-btn { 
+    background: #1e293b; 
+    border-color: #334155; 
+    color: #cbd5e1; 
+}
+
+body.dark-mode .format-btn { 
+    background: #334155; 
+    border-color: #475569; 
+    color: #e2e8f0; 
+}
+
+body.dark-mode .format-btn:hover { 
+    background: #475569; 
+}
+
+body.dark-mode .draggable-img-wrapper:hover { 
+    border-color: #60a5fa; 
+}
+
+body.dark-mode .modal-content { 
+    background: #1e293b; 
+    color: #e2e8f0; 
+}
+
+body.dark-mode .modal-header { 
+    border-bottom-color: #334155; 
+}
